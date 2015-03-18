@@ -6,6 +6,8 @@
 
 package product;
 
+
+import credentials.database;
 import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -115,7 +117,7 @@ public class product {
     }
 
     private void doPostOrPutOrDelete(String query, String... params) {
-        try (Connection conn = getConnection()) {
+        try (Connection conn = database.getConnection()) {
             PreparedStatement pstmt = conn.prepareStatement(query);
             for (int i = 1; i <= params.length; i++) {
                 pstmt.setString(i, params[i - 1]);
@@ -139,25 +141,12 @@ public class product {
 //        return conn;
 //    }
     
-    private Connection getConnection() {
-        Connection conn = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String jdbc = "jdbc:mysql://" + System.getenv("OPENSHIFT_MYSQL_DB_HOST") + ":" +
-                    System.getenv("OPENSHIFT_MYSQL_DB_PORT") + "/sampleerp";
-            String user = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
-            String pass = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");        
-            conn = DriverManager.getConnection(jdbc, user, pass);
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(product.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return conn;
-    }
+
 
     private String getResults(String query, String... params) {
         JsonArrayBuilder productArr = Json.createArrayBuilder();
         String res = new String();
-        try (Connection conn = getConnection()) {
+        try (Connection conn = database.getConnection()) {
             System.out.println(query);
             PreparedStatement pstmt = conn.prepareStatement(query);
             if (params.length != 0) {
