@@ -130,6 +130,8 @@ public class sale {
 
     private String getResults(String query, String... params) {
         JsonArrayBuilder saleArr = Json.createArrayBuilder();
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
         String res = new String();
         try (Connection conn = database.getConnection()) {
             System.out.println(query);
@@ -148,13 +150,15 @@ public class sale {
                         .add("total", rs.getString("total"))
                         .add("note", rs.getString("note"));
                 res = json.build().toString();
-                saleArr.add(json);
+//                saleArr.add(json);
+                sb.append(res);
             }
         } catch (SQLException ex) {
             Logger.getLogger(sale.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (params.length == 0) {
-            res = saleArr.build().toString();
+            sb.append("]");
+            res=sb.toString();
         }
         return res;
     }
