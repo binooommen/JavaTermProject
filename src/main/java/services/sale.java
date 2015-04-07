@@ -129,7 +129,6 @@ public class sale {
     }
 
     private String getResults(String query, String... params) {
-        JsonArrayBuilder saleArr = Json.createArrayBuilder();
         StringBuilder sb = new StringBuilder();
         sb.append("[");
         String res = new String();
@@ -150,7 +149,6 @@ public class sale {
                         .add("total", rs.getString("total"))
                         .add("note", rs.getString("note"));
                 res = json.build().toString();
-//                saleArr.add(json);
                 sb.append(res);
             }
         } catch (SQLException ex) {

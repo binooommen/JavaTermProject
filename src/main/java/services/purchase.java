@@ -127,7 +127,8 @@ public class purchase {
     }
 
     private String getResults(String query, String... params) {
-        JsonArrayBuilder purchaseArr = Json.createArrayBuilder();
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
         String res = new String();
         try (Connection conn = database.getConnection()) {
             System.out.println(query);
@@ -145,13 +146,14 @@ public class purchase {
                         .add("total", rs.getString("total"))
                         .add("note", rs.getString("note"));
                 res = json.build().toString();
-                purchaseArr.add(json);
+                sb.append(res);
             }
         } catch (SQLException ex) {
             Logger.getLogger(purchase.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (params.length == 0) {
-            res = purchaseArr.build().toString();
+            sb.append("]");
+            res=sb.toString();
         }
         return res;
     }
