@@ -3,14 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package product;
-
+package services;
 
 import credentials.database;
 import java.io.StringReader;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,25 +32,22 @@ import javax.ws.rs.Produces;
  *
  * @author c0647015
  */
+@Path("/sale")
+public class sale {
 
-@Path("/products")
-public class product {
-    
     @GET
     @Produces("application/json")
     public String doGet() {
-        return getResults("SELECT * FROM product");
+        return getResults("SELECT * FROM sale");
     }
 
     @GET
     @Produces("application/json")
     @Path("{id}")
-    public String doGet(@PathParam("id") String productID) {
-        return getResults("SELECT * FROM product WHERE productID = ?", productID);
+    public String doGet(@PathParam("id") String id) {
+        return getResults("SELECT * FROM sale WHERE id = ?", id);
     }
-    
-    
-    
+
     @POST
     @Consumes("application/json")
     public void doPost(String str) {
@@ -77,8 +71,10 @@ public class product {
             }
         }
         System.out.println(mapKeyValue);
-        doPostOrPutOrDelete("INSERT INTO product (name, description, quantity) VALUES ( ?, ?, ?)",
-                mapKeyValue.get("name"), mapKeyValue.get("description"), mapKeyValue.get("quantity"));
+        doPostOrPutOrDelete("INSERT INTO sale (create_date, customer_id, product_id, quantity, total, note) VALUES ( null, ?, ?, ?, ?, ?)",
+                mapKeyValue.get("customer_id"),
+                mapKeyValue.get("product_id"), mapKeyValue.get("quantity"),
+                mapKeyValue.get("total"), mapKeyValue.get("note"));
     }
 
     @PUT
@@ -105,15 +101,18 @@ public class product {
             }
         }
         System.out.println(mapKayValue);
-        doPostOrPutOrDelete("UPDATE PRODUCT SET name = ?, description = ?, quantity = ? WHERE productID = ?",
-                mapKayValue.get("name"), mapKayValue.get("description"), mapKayValue.get("quantity"), id);
+        doPostOrPutOrDelete("UPDATE sale SET customer_id = ?, product_id = ?, quantity = ?"
+                + ", total = ?, note = ? WHERE id = ?",
+                mapKayValue.get("customer_id"), 
+                mapKayValue.get("product_id"), mapKayValue.get("quantity"), 
+                mapKayValue.get("total"), mapKayValue.get("note"), id);
 
     }
 
     @DELETE
     @Path("{id}")
     public void doDelete(@PathParam("id") String id, String str) {
-        doPostOrPutOrDelete("DELETE FROM product WHERE productID = ?", id);
+        doPostOrPutOrDelete("DELETE FROM sale WHERE id = ?", id);
     }
 
     private void doPostOrPutOrDelete(String query, String... params) {
@@ -124,27 +123,13 @@ public class product {
             }
             pstmt.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(product.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(sale.class.getName()).log(Level.SEVERE, null, ex);
         }
-        getResults("SELECT * FROM product");
+        getResults("SELECT * FROM sale");
     }
 
-//    private Connection getConnection() throws SQLException {
-//        Connection conn = null;
-//        try {
-//            Class.forName("com.mysql.jdbc.Driver");
-//            String jdbc = "jdbc:mysql://$OPENSHIFT_MYSQL_DB_/sampleerp";
-//            conn = (Connection) DriverManager.getConnection(jdbc, "adminytPbeCt", "i2Jzyb_PbQUz");
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(product.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return conn;
-//    }
-    
-
-
     private String getResults(String query, String... params) {
-        JsonArrayBuilder productArr = Json.createArrayBuilder();
+        JsonArrayBuilder saleArr = Json.createArrayBuilder();
         String res = new String();
         try (Connection conn = database.getConnection()) {
             System.out.println(query);
@@ -155,20 +140,22 @@ public class product {
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 JsonObjectBuilder json = Json.createObjectBuilder()
-                        .add("productID", rs.getInt("productID"))
-                        .add("name", rs.getString("name"))
-                        .add("description", rs.getString("description"))
-                        .add("quantity", rs.getInt("quantity"));
+                        .add("id", rs.getInt("id"))
+                        .add("create_date", rs.getString("create_date"))
+                        .add("customer_id", rs.getInt("customer_id"))
+                        .add("product_id", rs.getInt("product_id"))
+                        .add("quantity", rs.getString("quantity"))
+                        .add("total", rs.getString("total"))
+                        .add("note", rs.getString("note"));
                 res = json.build().toString();
-                productArr.add(json);
+                saleArr.add(json);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(product.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(sale.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (params.length == 0) {
-            res = productArr.build().toString();
+            res = saleArr.build().toString();
         }
         return res;
     }
-    
 }

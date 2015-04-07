@@ -13,7 +13,7 @@ import javax.ws.rs.core.Application;
  *
  * @author c0647015
  */
-@javax.ws.rs.ApplicationPath("webresources")
+@javax.ws.rs.ApplicationPath("api")
 public class ApplicationConfig extends Application {
 
     @Override
@@ -30,7 +30,10 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(product.product.class);
+        resources.add(services.customer.class);
+        resources.add(services.product.class);
+        resources.add(services.purchase.class);
+        resources.add(services.sale.class);
     }
     
 }

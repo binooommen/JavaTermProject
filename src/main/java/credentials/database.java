@@ -31,4 +31,16 @@ public class database {
         }
         return conn;
     }
+    
+//    public static Connection getConnection() {
+//        Connection conn = null;
+//        try {
+//            Class.forName("com.mysql.jdbc.Driver");
+//            String jdbc = "jdbc:mysql://localhost/simpleerp";
+//            conn = DriverManager.getConnection(jdbc, "root", "");
+//        } catch (ClassNotFoundException | SQLException ex) {
+//            Logger.getLogger(database.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return conn;
+//    }
 }
