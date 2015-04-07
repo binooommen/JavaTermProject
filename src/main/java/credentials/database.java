@@ -22,7 +22,7 @@ public class database {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String jdbc = "jdbc:mysql://" + System.getenv("OPENSHIFT_MYSQL_DB_HOST") + ":"
-                    + System.getenv("OPENSHIFT_MYSQL_DB_PORT") + "/sampleerp";
+                    + System.getenv("OPENSHIFT_MYSQL_DB_PORT") + "/simpleerp";
             String user = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
             String pass = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
             conn = DriverManager.getConnection(jdbc, user, pass);
