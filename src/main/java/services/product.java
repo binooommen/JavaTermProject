@@ -3,9 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package services;
-
 
 import credentials.database;
 import java.io.StringReader;
@@ -35,10 +33,9 @@ import javax.ws.rs.Produces;
  *
  * @author c0647015
  */
-
 @Path("/product")
 public class product {
-    
+
     @GET
     @Produces("application/json")
     public String doGet() {
@@ -51,7 +48,7 @@ public class product {
     public String doGet(@PathParam("id") String id) {
         return getResults("SELECT * FROM product WHERE id = ?", id);
     }
-    
+
     @POST
     @Consumes("application/json")
     public void doPost(String str) {
@@ -127,10 +124,8 @@ public class product {
         getResults("SELECT * FROM product");
     }
 
-
     private String getResults(String query, String... params) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("[");
+        JsonArrayBuilder productArr = Json.createArrayBuilder();
         String res = new String();
         try (Connection conn = database.getConnection()) {
             System.out.println(query);
@@ -147,17 +142,16 @@ public class product {
                         .add("cost_price", rs.getString("cost_price"))
                         .add("list_price", rs.getString("list_price"))
                         .add("description", rs.getString("description"));
+                productArr.add(json);
                 res = json.build().toString();
-                sb.append(res);
             }
         } catch (SQLException ex) {
             Logger.getLogger(product.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (params.length == 0) {
-            sb.append("]");
-            res=sb.toString();
+            res = productArr.build().toString();
         }
         return res;
     }
-    
+
 }
