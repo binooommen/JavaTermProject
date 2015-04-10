@@ -12,10 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import services.customer;
-import services.product;
-import services.purchase;
-import services.sale;
 
 /**
  *

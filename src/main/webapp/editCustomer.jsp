@@ -1,6 +1,6 @@
 <%-- 
-    Document   : login
-    Created on : 6-Apr-2015, 11:18:08 PM
+    Document   : editCustomer
+    Created on : 10-Apr-2015, 3:01:46 PM
     Author     : c0647015
 --%>
 
@@ -73,61 +73,35 @@
                             </div>
                             <div class="tab-pane" id="customer">
                                 <div class="col-md-9" > 
-                                    <div class="tab-content">
-                                        <div class="panel panel-default tab-pane active" id="customerPanel">
-                                            <div class="panel-heading">
-                                                <a  data-toggle="modal" href="#customerEditPanel">
-                                                    <button type="button" class="btn btn-success">Create</button>
-                                                </a>
-                                            </div>
-                                            <table id="customer_tbl" class="table table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th>ID</th>
-                                                        <th>Name</th>
-                                                        <th>Create Date</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                <%
-                                                    String qr = "select * from customer;";
-                                                    homeBean.setCustomerData(qr);
-                                                    List<Customer> Lcust = homeBean.getListOfCustomer();
-                                                    for (int i = 0; i < Lcust.size(); i += 1) {
-                                                        Customer c = Lcust.get(i);
-                                                %>
-                                                <tr>      
-                                                    <td><%=c.getId()%></td>
-                                                    <td><%=c.getName()%></td>
-                                                    <td><%=c.getCreate_date()%></td>
-                                                </tr>
-                                                <% }%>
-                                            </tbody>
-                                        </table>
-                                    </div> 
-                                    <div class="modal fade" id="customerEditPanel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                    <h4 class="modal-title" id="exampleModalLabel">Create Customer</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form>
-                                                        <div class="form-group">
-                                                            <label for="recipient-name" class="control-label">Name</label>
-                                                            <input type="text" class="form-control" id="recipient-name">
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Save</button>
-                                                </div>
-                                            </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <a href="editCustomer.jsp"><button type="button" class="btn btn-success">Create</button></a>
                                         </div>
-                                    </div>
-                                </div> 
+                                        <table id="customer_tbl" class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Name</th>
+                                                    <th>Create Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <%
+                                                String qr = "select * from customer;";
+                                                homeBean.setCustomerData(qr);
+                                                List<Customer> Lcust = homeBean.getListOfCustomer();
+                                                for (int i = 0; i < Lcust.size(); i += 1) {
+                                                    Customer c = Lcust.get(i);
+                                            %>
+                                            <tr>      
+                                                <td><%=c.getId()%></td>
+                                                <td><%=c.getName()%></td>
+                                                <td><%=c.getCreate_date()%></td>
+                                            </tr>
+                                            <% }%>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                         <div class="tab-pane" id="product">
