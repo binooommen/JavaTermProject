@@ -24,7 +24,7 @@
         <jsp:useBean id="login" scope="request" class="bean.login"></jsp:useBean>
         <section>
             <div class="container">
-                <h1 class="page-header">SimpleERP</h1> 
+                <h1 class="page-header">SellEasyERP</h1> 
                 <h2>Admin Login</h2>
                 <form role="form" id="login-form" action="loginServlet" method="post">
                     <div class="input-group">
