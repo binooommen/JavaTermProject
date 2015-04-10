@@ -4,6 +4,12 @@
     Author     : c0647015
 --%>
 
+<%@page import="bean.Purchase"%>
+<%@page import="bean.Sale"%>
+<%@page import="bean.Product"%>
+<%@page import="bean.Customer"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="bean.home"%>
 <!DOCTYPE html>
@@ -21,73 +27,76 @@
     </head>
     <body>
         <jsp:useBean id="homeBean" scope="request" class="bean.home"></jsp:useBean>
-        <section>
-            <div class="container">
-                <div class="jumbotron">
-                    <h1>SellEasyERP</h1>      
-                    <p>Manage your business better...</p>      
-                </div>
-                
-                <form role="form" id="home-form" action="homeServlet" method="post">
-                    <div class="col-md-3">
-                        <ul class="nav nav-pills nav-stacked">
-                            <li class="active">
-                                <a data-toggle="tab" href="#home">
-                                    <span class="glyphicon glyphicon-home"></span>&nbsp; Home
-                                </a>
-                            </li>
-                            <li><a data-toggle="tab" href="#customer">
-                                    <span class="glyphicon glyphicon-user"></span>&nbsp; Customer
-                                </a>
-                            </li>
-                            <li>
-                                <a data-toggle="tab" href="#product">
-                                    <span class="glyphicon glyphicon-gift"></span>&nbsp; Product
-                                </a>
-                            </li>
-                            <li>
-                                <a data-toggle="tab" href="#sale">
-                                    <span class="glyphicon glyphicon-shopping-cart"></span>&nbsp; Sale
-                                </a>
-                            </li>
-                            <li>
-                                <a data-toggle="tab" href="#purchase">
-                                    <span class="glyphicon glyphicon-folder-open"></span>&nbsp; Purchase
-                                </a>
-                            </li>
-                        </ul>
+            <section>
+                <div class="container">
+                    <div class="jumbotron">
+                        <h1>SellEasyERP</h1>      
+                        <p>Manage your business better...</p>      
                     </div>
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="home">
-                            <div class="col-md-9"> 
-                                <div class="well well-sm">
-                                    My home
+
+                    <form role="form" id="home-form" action="homeServlet" method="post">
+                        <div class="col-md-3">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li class="active">
+                                    <a data-toggle="tab" href="#home">
+                                        <span class="glyphicon glyphicon-home"></span>&nbsp; Home
+                                    </a>
+                                </li>
+                                <li><a data-toggle="tab" href="#customer">
+                                        <span class="glyphicon glyphicon-user"></span>&nbsp; Customer
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab" href="#product">
+                                        <span class="glyphicon glyphicon-gift"></span>&nbsp; Product
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab" href="#sale">
+                                        <span class="glyphicon glyphicon-shopping-cart"></span>&nbsp; Sale
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab" href="#purchase">
+                                        <span class="glyphicon glyphicon-folder-open"></span>&nbsp; Purchase
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="home">
+                                <div class="col-md-9"> 
+                                    <div class="well well-sm">
+                                        My home
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="tab-pane" id="customer">
-                            <div class="col-md-9" > 
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">Customers</div>
-                                    <table id="customer_tbl" class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Create Date</th>
+                            <div class="tab-pane" id="customer">
+                                <div class="col-md-9" > 
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Customers</div>
+                                        <table id="customer_tbl" class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Name</th>
+                                                    <th>Create Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <%
+                                                String qr = "select * from customer;";
+                                                homeBean.setCustomerData(qr);
+                                                List<Customer> Lcust = homeBean.getListOfCustomer();
+                                                for (int i = 0; i < Lcust.size(); i += 1) {
+                                                    Customer c = Lcust.get(i);
+                                            %>
+                                            <tr>      
+                                                <td><%=c.getId()%></td>
+                                                <td><%=c.getName()%></td>
+                                                <td><%=c.getCreate_date()%></td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Mark</td>
-                                                <td>01/03/15</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>John</td>
-                                                <td>12/12/12</td>
-                                            </tr>
+                                            <% }%>
                                         </tbody>
                                     </table>
                                 </div>
@@ -109,22 +118,22 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Nokia Lumia 520</td>
-                                                <td>400</td>
-                                                <td>500</td>
-                                                <td>good product</td>
-                                                <td>01/03/15</td>
+                                            <%
+                                                qr = "select * from product;";
+                                                homeBean.setProductData(qr);
+                                                List<Product> Lprod = homeBean.getListOfProduct();
+                                                for (int i = 0; i < Lprod.size(); i += 1) {
+                                                    Product p = Lprod.get(i);
+                                            %>
+                                            <tr>      
+                                                <td><%=p.getId()%></td>
+                                                <td><%=p.getName()%></td>
+                                                <td><%=p.getCost_price()%></td>
+                                                <td><%=p.getList_price()%></td>
+                                                <td><%=p.getDescription()%></td>
+                                                <td><%=p.getCreate_date()%></td>
                                             </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Iphone 6</td>
-                                                <td>700</td>
-                                                <td>900</td>
-                                                <td>best phone</td>
-                                                <td>12/12/12</td>
-                                            </tr>
+                                            <% }%>
                                         </tbody>
                                     </table>
                                 </div>
@@ -142,26 +151,28 @@
                                                 <th>Customer</th>
                                                 <th>Product</th>
                                                 <th>Quantity</th>
-                                                <th>total</th>
+                                                <th>Total</th>
+                                                <th>Note</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>01/03/15</td>
-                                                <td>John</td>
-                                                <td>Iphone6</td>
-                                                <td>2</td>
-                                                <td>1800</td>
+                                            <%
+                                                qr = "select * from sale;";
+                                                homeBean.setSaleData(qr);
+                                                List<Sale> Lsale = homeBean.getListOfSale();
+                                                for (int i = 0; i < Lsale.size(); i += 1) {
+                                                    Sale p = Lsale.get(i);
+                                            %>
+                                            <tr>      
+                                                <td><%=p.getId()%></td>
+                                                <td><%=p.getCreate_date()%></td>
+                                                <td><%=p.getCustomer_id()%></td>
+                                                <td><%=p.getProduct_id()%></td>
+                                                <td><%=p.getQuantity()%></td>
+                                                <td><%=p.getTotal()%></td>
+                                                <td><%=p.getNote()%></td>
                                             </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>03/03/15</td>
-                                                <td>Mark</td>
-                                                <td>Nokia lumia</td>
-                                                <td>3</td>
-                                                <td>1000</td>
-                                            </tr>
+                                            <% }%>
                                         </tbody>
                                     </table>
                                 </div>
@@ -183,22 +194,22 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Nokia Lumia 520</td>
-                                                <td>4</td>
-                                                <td>2000</td>
-                                                <td>good product</td>
-                                                <td>01/03/15</td>
+                                            <%
+                                                qr = "select * from purchase;";
+                                                homeBean.setPurchaseData(qr);
+                                                List<Purchase> Lpurchase = homeBean.getListOfPurchase();
+                                                for (int i = 0; i < Lpurchase.size(); i += 1) {
+                                                    Purchase p = Lpurchase.get(i);
+                                            %>
+                                            <tr>      
+                                                <td><%=p.getId()%></td>
+                                                <td><%=p.getProduct_id()%></td>
+                                                <td><%=p.getQuantity()%></td>
+                                                <td><%=p.getTotal()%></td>
+                                                <td><%=p.getNote()%></td>
+                                                <td><%=p.getCreate_date()%></td>
                                             </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Iphone 6</td>
-                                                <td>3</td>
-                                                <td>900</td>
-                                                <td>best phone</td>
-                                                <td>12/12/12</td>
-                                            </tr>
+                                            <% }%>
                                         </tbody>
                                     </table>
                                 </div>
