@@ -12,20 +12,27 @@ $(document).ready(function() {
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 success: function(data) {
-                    if (data === "0") {
-
-                    } else {
-                        $("#closeCustomerDialog").click();
-                        $("#dialogErr").text("");
-                        window.location.href = "./home.jsp";
-
-                    }
+                    $("#closeCustomerDialog").click();
+                    $("#dialogErr").text("");
+                    window.location.href = "./home.jsp";
                 }
             });
-//            $("#closeCustomerDialog").click();
-//            $("#dialogErr").text("");
-//            window.location.href = "./home.jsp";
         }
+    });
+
+
+
+    $('.customerDel').click(function() {
+        var customerId = $(this).attr('id');
+        $.ajax({
+            url: "./api/customer/" + customerId,
+            dataType: "json",
+            contentType: 'application/json; charset=UTF-8',
+            method: "delete",
+            success: function(data) {
+                window.location.href = "./home.jsp";
+            }
+        });
     });
 
 });

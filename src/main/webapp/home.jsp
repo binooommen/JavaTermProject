@@ -100,7 +100,12 @@
                                                 <tr>      
                                                     <td><%=c.getId()%></td>
                                                     <td><%=c.getName()%></td>
-                                                    <td><%=c.getCreate_date()%></td>
+                                                    <td>
+                                                        <%=c.getCreate_date()%>
+                                                        <button style="float:right" type="button" id="<%=c.getId()%>" class="btn btn-danger customerDel">
+                                                            Delete
+                                                        </button>
+                                                    </td>
                                                 </tr>
                                                 <% }%>
                                             </tbody>

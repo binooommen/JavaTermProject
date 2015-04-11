@@ -109,8 +109,9 @@ public class customer {
 
     @DELETE
     @Path("{id}")
-    public void doDelete(@PathParam("id") String id, String str) {
+    public String doDelete(@PathParam("id") String id, String str) {
         doPostOrPutOrDelete("DELETE FROM customer WHERE id = ?", id);
+        return "1";
     }
 
     private void doPostOrPutOrDelete(String query, String... params) {
