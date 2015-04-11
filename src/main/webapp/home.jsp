@@ -110,7 +110,8 @@
                                                                  data-toggle="modal" data-target="#customerEditPanel" data-whatever="<%=c.getId()%>">
                                                             Edit
                                                         </button>
-                                                        <button  type="button" id="<%=c.getId()%>" class="btn btn-danger customerDel">
+                                                        <button  type="button" id="<%=c.getId()%>" class="btn btn-danger"
+                                                                 data-toggle="modal" data-target="#customerDeletePanel" data-whatever="<%=c.getId()%>">
                                                             Delete
                                                         </button>
                                                     </div>
@@ -136,7 +137,6 @@
                                                 <div class="form-group">
                                                     <span class="control-label" style="color:red;" id="dialogErr"></span>
                                                 </div>
-
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal" id="closeCustomerDialog">Close</button>
@@ -179,6 +179,30 @@
                                     </div>
                                 </div>
                                 <!--Modal dialog box for edit customer ends-->
+                                <!--Modal dialog box for delete customer-->
+                                <div class="modal fade" id="customerDeletePanel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="exampleModalLabel">Delete Customer</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <input type="hidden" class="form-control" id="recipientIdDelete" >
+                                                </div>
+                                                <div class="form-group">
+                                                    <span class="control-label" style="color:red;" id="deleteDialogErr">Are you sure</span>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal" id="closeCustomerDialog">Close</button>
+                                                <button type="button" class="btn btn-danger customerDel" id="deleteCustomerSave">Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Modal dialog box for delete customer ends-->
                             </div> 
                         </div>
                     </div>
