@@ -22,7 +22,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-
+        <script src="js/home.js"></script>
         <link href='css/default_style.css' type="text/css"/>
     </head>
     <body>
@@ -34,7 +34,7 @@
                         <p>Manage your business better...</p>      
                     </div>
 
-                    <form role="form" id="home-form" action="homeServlet" method="post">
+                    <!--<form role="form" id="home-form" action="homeServlet" method="post">-->
                         <div class="col-md-3">
                             <ul class="nav nav-pills nav-stacked">
                                 <li class="active">
@@ -42,7 +42,8 @@
                                         <span class="glyphicon glyphicon-home"></span>&nbsp; Home
                                     </a>
                                 </li>
-                                <li><a data-toggle="tab" href="#customer">
+                                <li>
+                                    <a data-toggle="tab" href="#customer">
                                         <span class="glyphicon glyphicon-user"></span>&nbsp; Customer
                                     </a>
                                 </li>
@@ -113,16 +114,18 @@
                                                     <h4 class="modal-title" id="exampleModalLabel">Create Customer</h4>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form>
-                                                        <div class="form-group">
-                                                            <label for="recipient-name" class="control-label">Name</label>
-                                                            <input type="text" class="form-control" id="recipient-name">
-                                                        </div>
-                                                    </form>
+                                                    <div class="form-group">
+                                                        <label for="recipient-name" class="control-label">Name</label>
+                                                        <input type="text" class="form-control" id="recipientNameSave">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <span class="control-label" style="color:red;" id="dialogErr"></span>
+                                                    </div>
+
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Save</button>
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal" id="closeCustomerDialog">Close</button>
+                                                    <button type="button" class="btn btn-primary" id="createCustomerSave">Save</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -250,7 +253,7 @@
                             </div>
                         </div>
                     </div>
-                </form>
+                <!--</form>-->
             </div> 
         </section>
     </body>

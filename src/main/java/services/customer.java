@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -50,7 +52,7 @@ public class customer {
 
     @POST
     @Consumes("application/json")
-    public void doPost(String str) {
+    public String doPost(String str) {
         JsonParser parser = Json.createParser(new StringReader(str));
         Map<String, String> mapKeyValue = new HashMap<>();
         String key = "", val;
@@ -70,8 +72,11 @@ public class customer {
                     break;
             }
         }
-        System.out.println(mapKeyValue);
-        doPostOrPutOrDelete("INSERT INTO customer (create_date, name) VALUES ( null, ?)", mapKeyValue.get("name"));
+        Date d = new Date();
+        SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd");
+        String curr_date=form.format(d);
+        doPostOrPutOrDelete("INSERT INTO customer (create_date, name) VALUES ( ?, ?)", curr_date, mapKeyValue.get("name"));
+        return "1";
     }
 
     @PUT
@@ -145,7 +150,7 @@ public class customer {
         }
         if (params.length == 0) {
             sb.append("]");
-            res=sb.toString();
+            res = sb.toString();
         }
         return res;
     }
