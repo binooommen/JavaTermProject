@@ -4,11 +4,19 @@ $(document).ready(function() {
         var saleProduct = $('#saleProductSave').val();
         var saleQuantity = $('#saleQuantitySave').val();
         var saleTotal = $('#saleTotalSave').val();
+        var avaliableQuantity = $('#saleAvaliableQuantitySave').val();
         var res = {customer_id: $('#saleCustomerSave').val(), product_id: $('#saleProductSave').val(),
             quantity: $('#saleQuantitySave').val(), total: $('#saleTotalSave').val(), note: "note"};
         if (saleCustomer === '' && saleProduct === '' && saleQuantity === '' && saleTotal === '') {
             $("#dialogSaleErr").text("All fields are required.");
-        } else {
+        }
+        else if (parseInt(saleQuantity) <= 0) {
+            $("#dialogSaleErr").text("You cannot enter an invalid quantity.");
+        }
+        else if (parseInt(saleQuantity) > parseInt(avaliableQuantity)) {
+            $("#dialogSaleErr").text("Only " + avaliableQuantity + " products available.");
+        }
+        else {
             $.ajax({
                 url: './api/sale/',
                 type: 'POST',
@@ -77,8 +85,8 @@ $(document).ready(function() {
         var saleCustomer = $('#saleCustomerEdit').val();
         var saleProduct = $('#saleProductEdit').val();
         var saleQuantity = $('#saleQuantityEdit').val();
-        var saleName = $('#saleTotalEdit').val();
-        
+        var saleTotal = $('#saleTotalEdit').val();
+
         var res = {customer_id: $('#saleCustomerEdit').val(), product_id: $('#saleProductEdit').val(),
             quantity: $('#saleQuantityEdit').val(), total: $('#saleTotalEdit').val(), note: "note"};
         var saleId = $('#saleIdEdit').val();
@@ -93,7 +101,7 @@ $(document).ready(function() {
                 dataType: 'json',
                 success: function(data) {
                     $("#closeSaleDialog").click();
-                    $("#dialogErr").text("");
+                    $("#dialogSaleErr").text("");
                     window.location.href = "./home.jsp";
                 }
             });
@@ -101,6 +109,35 @@ $(document).ready(function() {
     });
 
 
+    $("#saleProductSave").change(function() {
+        var sale_product_id = $(this).children(":selected").attr("value");
+        var url = './api/product/' + sale_product_id;
+        $.getJSON(url, function(data) {
+            if (!jQuery.isEmptyObject(data)) {
+                var productSale = data.list_price;
+                var avaliableQuantity = data.quantity_available;
+                $('#saleSalePriceSave').val(productSale);
+                $('#saleAvaliableQuantitySave').val(avaliableQuantity);
+            }
+        });
+    });
+
+
+    $("#saleQuantitySave").change(function() {
+        var qty = $(this).val();
+        var productSale = $('#saleSalePriceSave').val();
+        var avaliableQuantity = $('#saleAvaliableQuantitySave').val();
+        if (parseInt(qty) !== 0) {
+            if (parseInt(qty) <= parseInt(avaliableQuantity)) {
+                $('#saleTotalSave').val(qty * productSale);
+                $("#dialogSaleErr").text("");
+            } else {
+                $("#dialogSaleErr").text("Only " + avaliableQuantity + " products available.");
+            }
+        }else{
+            $("#dialogSaleErr").text("");
+        }
+    });
 
 
 });

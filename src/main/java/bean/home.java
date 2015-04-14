@@ -87,6 +87,7 @@ public class home {
 
     public void setSaleData(String query) throws SQLException {
         Connection conn = database.getConnection();
+        System.out.println(query);
         PreparedStatement pstmt = conn.prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
         List<Sale> listOfSale = new <Sale>ArrayList();
@@ -96,6 +97,8 @@ public class home {
             sl.setCreate_date(rs.getString("create_date"));
             sl.setCustomer_id(rs.getInt("customer_id"));
             sl.setProduct_id(rs.getInt("product_id"));
+            sl.setCustomer_name(rs.getString("customer_name"));
+            sl.setProduct_name(rs.getString("product_name"));
             sl.setQuantity(rs.getFloat("quantity"));
             sl.setTotal(rs.getString("total"));
             sl.setNote(rs.getString("note"));

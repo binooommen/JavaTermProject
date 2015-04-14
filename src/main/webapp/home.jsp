@@ -383,7 +383,10 @@
                                     </thead>
                                     <tbody>
                                         <%
-                                            qr = "select * from sale;";
+                                            qr = "SELECT s.id as 'id', s.create_date as 'create_date', customer_id, product_id, "
+                                                    + "quantity, total, note, c.name as 'customer_name', p.name as 'product_name' "
+                                                    + "FROM sale s left join product p on s.product_id = p.id "
+                                                    + "left join customer c on s.customer_id = c.id;";
                                             homeBean.setSaleData(qr);
                                             List<Sale> Lsale = homeBean.getListOfSale();
                                             for (int i = 0; i < Lsale.size(); i += 1) {
@@ -392,15 +395,15 @@
                                         <tr>      
                                             <td><%=s.getId()%></td>
                                             <td><%=s.getCreate_date()%></td>
-                                            <td><%=s.getCustomer_id()%></td>
-                                            <td><%=s.getProduct_id()%></td>
+                                            <td><%=s.getCustomer_name()%></td>
+                                            <td><%=s.getProduct_name()%></td>
                                             <td><%=s.getQuantity()%></td>
                                             <td><%=s.getTotal()%>
                                                 <div class="btn-group" role="group" style="float:right">
-                                                    <button  type="button" id="<%=s.getId()%>" class="btn btn-warning productEdit" 
-                                                             data-toggle="modal" data-target="#saleEditPanel" data-whatever="<%=s.getId()%>">
-                                                        Edit
-                                                    </button>
+                                                    <!--                                                    <button  type="button" id="" class="btn btn-warning productEdit" 
+                                                                                                                 data-toggle="modal" data-target="#saleEditPanel" data-whatever="">
+                                                                                                            Edit
+                                                                                                        </button>-->
                                                     <button  type="button" id="<%=s.getId()%>" class="btn btn-danger"
                                                              data-toggle="modal" data-target="#saleDeletePanel" data-whatever="<%=s.getId()%>">
                                                         Delete
@@ -421,15 +424,38 @@
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                             <h4 class="modal-title" id="exampleModalLabel">Create Sale</h4>
                                         </div>
+
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 <label for="saleCustomerSave" class="control-label">Customer</label>
-                                                <input type="text" class="form-control" id="saleCustomerSave">
+                                                <select class="form-control" id="saleCustomerSave">
+                                                    <option></option>
+                                                    <%
+                                                        for (int i = 0; i < Lcust.size(); i += 1) {
+                                                            Customer c = Lcust.get(i);
+                                                    %>
+                                                    <option id="<%=c.getId()%>" value="<%=c.getId()%>"><%=c.getName()%></option>
+                                                    <% }%>
+                                                </select>
+
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="saleProductSave" class="control-label">Product</label>
-                                                <input type="text" class="form-control" id="saleProductSave">
+                                                <select class="form-control" id="saleProductSave">
+                                                    <option></option>
+                                                    <%
+                                                        for (int i = 0; i < Lprod.size(); i += 1) {
+                                                            Product p = Lprod.get(i);
+                                                    %>
+                                                    <option id="<%=p.getId()%>" value="<%=p.getId()%>"><%=p.getName()%></option>
+                                                    <% }%>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="saleAvaliableQuantitySave" class="control-label">Available Quantity</label>
+                                                <input type="text" class="form-control" id="saleAvaliableQuantitySave" readonly="true">
                                             </div>
 
                                             <div class="form-group">
@@ -438,8 +464,13 @@
                                             </div>
 
                                             <div class="form-group">
+                                                <label for="saleSalePriceSave" class="control-label">Sale Price</label>
+                                                <input type="text" class="form-control" id="saleSalePriceSave" readonly="true">
+                                            </div>
+
+                                            <div class="form-group">
                                                 <label for="saleTotalSave" class="control-label">Total</label>
-                                                <input type="text" class="form-control" id="saleTotalSave">
+                                                <input type="text" class="form-control" id="saleTotalSave" readonly="true">
                                             </div>
 
                                             <div class="form-group">

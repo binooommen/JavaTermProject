@@ -138,13 +138,25 @@ public class product {
                 pstmt.setString(1, params[0]);
             }
             ResultSet rs = pstmt.executeQuery();
+            ResultSet qtyRs;
+            int product_id;
             while (rs.next()) {
+                product_id = rs.getInt("id");
+                String findQtyQuery = "SELECT (sum(quantity) - (SELECT sum(quantity) FROM sale WHERE product_id = 1)) as \"available_qty\" "
+                        + "FROM purchase WHERE product_id = "+product_id+";";
+                pstmt = conn.prepareStatement(findQtyQuery);
+                qtyRs = pstmt.executeQuery();
+                int available_qty=0;
+                if(qtyRs.next()){
+                    available_qty=qtyRs.getInt("available_qty");
+                }
                 JsonObjectBuilder json = Json.createObjectBuilder()
-                        .add("id", rs.getInt("id"))
+                        .add("id", product_id)
                         .add("create_date", rs.getString("create_date"))
                         .add("name", rs.getString("name"))
                         .add("cost_price", rs.getString("cost_price"))
                         .add("list_price", rs.getString("list_price"))
+                        .add("quantity_available", available_qty)
                         .add("description", rs.getString("description"));
                 productArr.add(json);
                 res = json.build().toString();
