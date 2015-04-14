@@ -23,6 +23,8 @@
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <script src="js/home.js"></script>
+        <script src="js/product.js"></script>
+        <script src="js/sale.js"></script>
         <link href='css/default_style.css' type="text/css"/>
     </head>
     <body>
@@ -223,7 +225,6 @@
                                             <th>Name</th>
                                             <th>Cost price</th>
                                             <th>Sale price</th>
-                                            <!--<th>description</th>-->
                                             <th>Create Date</th>
                                         </tr>
                                     </thead>
@@ -240,7 +241,6 @@
                                             <td><%=p.getName()%></td>
                                             <td><%=p.getCost_price()%></td>
                                             <td><%=p.getList_price()%></td>
-                                            <!--<td><%=p.getDescription()%></td>-->
                                             <td>
                                                 <%=p.getCreate_date()%>
                                                 <div class="btn-group" role="group" style="float:right">
@@ -366,7 +366,9 @@
                         <div class="col-md-9" > 
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <button type="button" class="btn btn-success">Create</button>
+                                    <a data-toggle="modal" href="#saleCreatePanel">
+                                        <button type="button" class="btn btn-success">Create</button>
+                                    </a>
                                 </div>
                                 <table id="sale_tbl" class="table table-striped">
                                     <thead>
@@ -377,7 +379,7 @@
                                             <th>Product</th>
                                             <th>Quantity</th>
                                             <th>Total</th>
-                                            <th>Note</th>
+                                            <!--<th>Note</th>-->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -386,21 +388,131 @@
                                             homeBean.setSaleData(qr);
                                             List<Sale> Lsale = homeBean.getListOfSale();
                                             for (int i = 0; i < Lsale.size(); i += 1) {
-                                                Sale p = Lsale.get(i);
+                                                Sale s = Lsale.get(i);
                                         %>
                                         <tr>      
-                                            <td><%=p.getId()%></td>
-                                            <td><%=p.getCreate_date()%></td>
-                                            <td><%=p.getCustomer_id()%></td>
-                                            <td><%=p.getProduct_id()%></td>
-                                            <td><%=p.getQuantity()%></td>
-                                            <td><%=p.getTotal()%></td>
-                                            <td><%=p.getNote()%></td>
+                                            <td><%=s.getId()%></td>
+                                            <td><%=s.getCreate_date()%></td>
+                                            <td><%=s.getCustomer_id()%></td>
+                                            <td><%=s.getProduct_id()%></td>
+                                            <td><%=s.getQuantity()%></td>
+                                            <td><%=s.getTotal()%>
+                                                <div class="btn-group" role="group" style="float:right">
+                                                    <button  type="button" id="<%=s.getId()%>" class="btn btn-warning productEdit" 
+                                                             data-toggle="modal" data-target="#saleEditPanel" data-whatever="<%=s.getId()%>">
+                                                        Edit
+                                                    </button>
+                                                    <button  type="button" id="<%=s.getId()%>" class="btn btn-danger"
+                                                             data-toggle="modal" data-target="#saleDeletePanel" data-whatever="<%=s.getId()%>">
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <% }%>
                                     </tbody>
                                 </table>
                             </div>
+
+                            <!--Modal dialog box for create sale-->
+                            <div class="modal fade" id="saleCreatePanel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="exampleModalLabel">Create Sale</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="productNameSave" class="control-label">Name</label>
+                                                <input type="text" class="form-control" id="saleNameSave">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="productCostSave" class="control-label">Cost Price</label>
+                                                <input type="text" class="form-control" id="saleCostSave">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="productSaleSave" class="control-label">Sale price</label>
+                                                <input type="text" class="form-control" id="saleSaleSave">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <span class="control-label" style="color:red;" id="dialogErr"></span>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" id="closeSaleDialog">Close</button>
+                                            <button type="button" class="btn btn-primary" id="createSaleSave">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Modal dialog box for create sale Ends-->
+                            <!--Modal dialog box for edit sale-->
+                            <div class="modal fade" id="saleEditPanel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="exampleModalLabel">Edit Sale</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="saleIdEdit" class="control-label">Id</label>
+                                                <input type="text" class="form-control" id="saleIdEdit" readonly="true">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="saleCreateDateEdit" class="control-label">Create Date</label>
+                                                <input type="text" class="form-control" id="saleCreateDateEdit" readonly="true">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="saleNameEdit" class="control-label">Name</label>
+                                                <input type="text" class="form-control" id="saleNameEdit">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="saleCostEdit" class="control-label">Cost Price</label>
+                                                <input type="text" class="form-control" id="saleCostEdit">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="saleSaleEdit" class="control-label">Sale price</label>
+                                                <input type="text" class="form-control" id="saleSaleEdit">
+                                            </div>
+                                            <div class="form-group">
+                                                <span class="control-label" style="color:red;" id="dialogErr"></span>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" id="closeSaleDialog">Close</button>
+                                            <button type="button" class="btn btn-primary" id="editSaleSave">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Modal dialog box for edit sale ends-->
+                            <!--Modal dialog box for delete sale-->
+                            <div class="modal fade" id="saleDeletePanel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="exampleModalLabel">Delete Sale</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <input type="hidden" class="form-control" id="saleIdDelete" >
+                                            </div>
+                                            <div class="form-group">
+                                                <span class="control-label" id="deleteDialogErr">Are you sure?</span>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" id="closeSaleDialog">Close</button>
+                                            <button type="button" class="btn btn-danger productDel" id="deleteSaleSave">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Modal dialog box for delete sale ends-->
                         </div>
                     </div>
                     <!--sale tab data ends-->
