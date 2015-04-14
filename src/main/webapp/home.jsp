@@ -25,6 +25,7 @@
         <script src="js/home.js"></script>
         <script src="js/product.js"></script>
         <script src="js/sale.js"></script>
+        <script src="js/purchase.js"></script>
         <link href='css/default_style.css' type="text/css"/>
     </head>
     <body>
@@ -566,7 +567,9 @@
                         <div class="col-md-9" > 
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <button type="button" class="btn btn-success">Create</button>
+                                    <a data-toggle="modal" href="#purchaseCreatePanel">
+                                        <button type="button" class="btn btn-success">Create</button>
+                                    </a>
                                 </div>
                                 <table id="purchase_tbl" class="table table-striped">
                                     <thead>
@@ -580,7 +583,9 @@
                                     </thead>
                                     <tbody>
                                         <%
-                                            qr = "select * from purchase;";
+                                            qr = "SELECT pr.id as 'id', pr.create_date as 'create_date', "
+                                                    + "product_id, quantity, total, note, p.name as 'product_name' "
+                                                    + "FROM purchase pr left join product p on pr.product_id = p.id;";
                                             homeBean.setPurchaseData(qr);
                                             List<Purchase> Lpurchase = homeBean.getListOfPurchase();
                                             for (int i = 0; i < Lpurchase.size(); i += 1) {
@@ -588,15 +593,149 @@
                                         %>
                                         <tr>      
                                             <td><%=p.getId()%></td>
-                                            <td><%=p.getProduct_id()%></td>
+                                            <td><%=p.getProduct_name()%></td>
                                             <td><%=p.getQuantity()%></td>
                                             <td><%=p.getTotal()%></td>
-                                            <td><%=p.getCreate_date()%></td>
+                                            <td><%=p.getCreate_date()%>
+                                                <div class="btn-group" role="group" style="float:right">
+                                                    <button  type="button" id="<%=p.getId()%>" class="btn btn-danger"
+                                                             data-toggle="modal" data-target="#purchaseDeletePanel" data-whatever="<%=p.getId()%>">
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <% }%>
                                     </tbody>
                                 </table>
                             </div>
+
+                            <!--Modal dialog box for create purchase-->
+                            <div class="modal fade" id="purchaseCreatePanel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="exampleModalLabel">Create Purchase</h4>
+                                        </div>
+
+                                        <div class="modal-body">
+
+                                            <div class="form-group">
+                                                <label for="purchaseProductSave" class="control-label">Product</label>
+                                                <select class="form-control" id="saleProductSave">
+                                                    <option></option>
+                                                    <%
+                                                        for (int i = 0; i < Lprod.size(); i += 1) {
+                                                            Product p = Lprod.get(i);
+                                                    %>
+                                                    <option id="<%=p.getId()%>" value="<%=p.getId()%>"><%=p.getName()%></option>
+                                                    <% }%>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="purchaseAvaliableQuantitySave" class="control-label">Available Quantity</label>
+                                                <input type="text" class="form-control" id="purchaseAvaliableQuantitySave" readonly="true">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="purchaseQuantitySave" class="control-label">Quantity</label>
+                                                <input type="text" class="form-control" id="purchaseQuantitySave">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="purchaseSalePriceSave" class="control-label">Sale Price</label>
+                                                <input type="text" class="form-control" id="purchaseSalePriceSave" readonly="true">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="purchaseTotalSave" class="control-label">Total</label>
+                                                <input type="text" class="form-control" id="purchaseTotalSave" readonly="true">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <span class="control-label" style="color:red;" id="dialogPurchaseErr"></span>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" id="closePurchaseDialog">Close</button>
+                                            <button type="button" class="btn btn-primary" id="createPurchaseSave">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Modal dialog box for create purchase Ends-->
+                            <!--Modal dialog box for edit purchase-->
+                            <div class="modal fade" id="purchaseEditPanel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="exampleModalLabel">Edit Purchase</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="purchaseIdEdit" class="control-label">Id</label>
+                                                <input type="text" class="form-control" id="purchaseIdEdit" readonly="true">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="purchaseCreateDateEdit" class="control-label">Create Date</label>
+                                                <input type="text" class="form-control" id="purchaseCreateDateEdit" readonly="true">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="purchaseProductEdit" class="control-label">Product</label>
+                                                <input type="text" class="form-control" id="purchaseProductEdit">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="purchaseQuantityEdit" class="control-label">Quantity</label>
+                                                <input type="text" class="form-control" id="purchaseQuantityEdit">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="purchaseTotalEdit" class="control-label">Total</label>
+                                                <input type="text" class="form-control" id="purchaseTotalEdit">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <span class="control-label" style="color:red;" id="dialogPurchaseErr"></span>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" id="closePurchaseDialog">Close</button>
+                                            <button type="button" class="btn btn-primary" id="editPurchaseSave">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Modal dialog box for edit purchase ends-->
+                            <!--Modal dialog box for delete purchase-->
+                            <div class="modal fade" id="purchaseDeletePanel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="exampleModalLabel">Delete Purchase</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <input type="hidden" class="form-control" id="purchaseIdDelete" >
+                                            </div>
+                                            <div class="form-group">
+                                                <span class="control-label" id="deleteDialogErr">Are you sure?</span>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" id="closePurchaseDialog">Close</button>
+                                            <button type="button" class="btn btn-danger saleDel" id="deletePurchaseSave">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Modal dialog box for delete sale ends-->
+
                         </div>
                     </div>
                     <!--purchase tab data ends-->

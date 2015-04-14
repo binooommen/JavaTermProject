@@ -14,6 +14,7 @@ public class Purchase {
     private int id;
     private String create_date;
     private int product_id;
+    private String product_name;
     private Float quantity;
     private String total;
     private String note;
@@ -21,10 +22,11 @@ public class Purchase {
     public Purchase() {
     }
 
-    public Purchase(int id, String create_date, int product_id, Float quantity, String total, String note) {
+    public Purchase(int id, String create_date, int product_id, Float quantity, String total, String note, String product_name) {
         this.id = id;
         this.create_date = create_date;
         this.product_id = product_id;
+        this.product_name = product_name;
         this.quantity = quantity;
         this.total = total;
         this.note = note;
@@ -76,6 +78,14 @@ public class Purchase {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getProduct_name() {
+        return product_name;
+    }
+
+    public void setProduct_name(String product_name) {
+        this.product_name = product_name;
     }
     
     
