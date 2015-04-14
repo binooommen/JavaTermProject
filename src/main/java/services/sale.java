@@ -105,7 +105,6 @@ public class sale {
                     break;
             }
         }
-        System.out.println(mapKayValue);
         doPostOrPutOrDelete("UPDATE sale SET customer_id = ?, product_id = ?, quantity = ?"
                 + ", total = ?, note = ? WHERE id = ?",
                 mapKayValue.get("customer_id"), 

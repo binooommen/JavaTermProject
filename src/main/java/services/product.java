@@ -142,7 +142,7 @@ public class product {
             int product_id;
             while (rs.next()) {
                 product_id = rs.getInt("id");
-                String findQtyQuery = "SELECT (sum(quantity) - (SELECT sum(quantity) FROM sale WHERE product_id = 1)) as \"available_qty\" "
+                String findQtyQuery = "SELECT (sum(quantity) - (SELECT sum(quantity) FROM sale WHERE product_id = "+product_id+")) as \"available_qty\" "
                         + "FROM purchase WHERE product_id = "+product_id+";";
                 pstmt = conn.prepareStatement(findQtyQuery);
                 qtyRs = pstmt.executeQuery();
