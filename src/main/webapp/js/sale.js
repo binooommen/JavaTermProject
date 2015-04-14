@@ -1,9 +1,13 @@
 $(document).ready(function() {
     $('#createSaleSave').click(function() {
-        var saleName = $('#saleNameSave').val();
-        var res = {name: $('#saleNameSave').val()};
-        if (saleName === '') {
-            $("#dialogErr").text("Please enter name.");
+        var saleCustomer = $('#saleCustomerSave').val();
+        var saleProduct = $('#saleProductSave').val();
+        var saleQuantity = $('#saleQuantitySave').val();
+        var saleTotal = $('#saleTotalSave').val();
+        var res = {customer_id: $('#saleCustomerSave').val(), product_id: $('#saleProductSave').val(),
+            quantity: $('#saleQuantitySave').val(), total: $('#saleTotalSave').val(), note: "note"};
+        if (saleCustomer === '' && saleProduct === '' && saleQuantity === '' && saleTotal === '') {
+            $("#dialogSaleErr").text("All fields are required.");
         } else {
             $.ajax({
                 url: './api/sale/',
@@ -13,7 +17,7 @@ $(document).ready(function() {
                 dataType: 'json',
                 success: function(data) {
                     $("#closeSaleDialog").click();
-                    $("#dialogErr").text("");
+                    $("#dialogSaleErr").text("");
                     window.location.href = "./home.jsp";
                 }
             });
@@ -53,25 +57,36 @@ $(document).ready(function() {
         $.getJSON(url, function(data) {
             if (!jQuery.isEmptyObject(data)) {
                 var saleId = data.id;
-                var saleName = data.name;
+                var saleCustomer = data.customer_id;
                 var saleDate = data.create_date;
+                var saleProduct = data.product_id;
+                var saleQuantity = data.quantity;
+                var saleTotal = data.total;
                 $('#saleIdEdit').val(saleId);
-                $('#saleCreateDateEdit').val(saleName);
-                $('#saleNameEdit').val(saleDate);
+                $('#saleCreateDateEdit').val(saleDate);
+                $('#saleCustomerEdit').val(saleCustomer);
+                $('#saleProductEdit').val(saleProduct);
+                $('#saleQuantityEdit').val(saleQuantity);
+                $('#saleTotalEdit').val(saleTotal);
             }
         });
     });
 
 
     $('#editSaleSave').click(function() {
-        var saleName = $('#saleNameEdit').val();
-        var res = {name: $('#saleNameEdit').val()};
-        var customerId = $('#saleIdEdit').val();
-        if (saleName === '') {
-            $("#dialogErr").text("Please enter name.");
+        var saleCustomer = $('#saleCustomerEdit').val();
+        var saleProduct = $('#saleProductEdit').val();
+        var saleQuantity = $('#saleQuantityEdit').val();
+        var saleName = $('#saleTotalEdit').val();
+        
+        var res = {customer_id: $('#saleCustomerEdit').val(), product_id: $('#saleProductEdit').val(),
+            quantity: $('#saleQuantityEdit').val(), total: $('#saleTotalEdit').val(), note: "note"};
+        var saleId = $('#saleIdEdit').val();
+        if (saleCustomer === '' && saleProduct === '' && saleQuantity === '' && saleTotal === '') {
+            $("#dialogSaleErr").text("All fields are required.");
         } else {
             $.ajax({
-                url: './api/sale/' + customerId,
+                url: './api/sale/' + saleId,
                 type: 'PUT',
                 data: JSON.stringify(res),
                 contentType: 'application/json; charset=utf-8',

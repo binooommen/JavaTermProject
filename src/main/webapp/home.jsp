@@ -379,7 +379,6 @@
                                             <th>Product</th>
                                             <th>Quantity</th>
                                             <th>Total</th>
-                                            <!--<th>Note</th>-->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -424,20 +423,27 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="form-group">
-                                                <label for="productNameSave" class="control-label">Name</label>
-                                                <input type="text" class="form-control" id="saleNameSave">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="productCostSave" class="control-label">Cost Price</label>
-                                                <input type="text" class="form-control" id="saleCostSave">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="productSaleSave" class="control-label">Sale price</label>
-                                                <input type="text" class="form-control" id="saleSaleSave">
+                                                <label for="saleCustomerSave" class="control-label">Customer</label>
+                                                <input type="text" class="form-control" id="saleCustomerSave">
                                             </div>
 
                                             <div class="form-group">
-                                                <span class="control-label" style="color:red;" id="dialogErr"></span>
+                                                <label for="saleProductSave" class="control-label">Product</label>
+                                                <input type="text" class="form-control" id="saleProductSave">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="saleQuantitySave" class="control-label">Quantity</label>
+                                                <input type="text" class="form-control" id="saleQuantitySave">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="saleTotalSave" class="control-label">Total</label>
+                                                <input type="text" class="form-control" id="saleTotalSave">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <span class="control-label" style="color:red;" id="dialogSaleErr"></span>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -466,19 +472,27 @@
                                                 <input type="text" class="form-control" id="saleCreateDateEdit" readonly="true">
                                             </div>
                                             <div class="form-group">
-                                                <label for="saleNameEdit" class="control-label">Name</label>
-                                                <input type="text" class="form-control" id="saleNameEdit">
+                                                <label for="saleCustomerEdit" class="control-label">Customer</label>
+                                                <input type="text" class="form-control" id="saleCustomerEdit">
                                             </div>
+
                                             <div class="form-group">
-                                                <label for="saleCostEdit" class="control-label">Cost Price</label>
-                                                <input type="text" class="form-control" id="saleCostEdit">
+                                                <label for="saleProductEdit" class="control-label">Product</label>
+                                                <input type="text" class="form-control" id="saleProductEdit">
                                             </div>
+
                                             <div class="form-group">
-                                                <label for="saleSaleEdit" class="control-label">Sale price</label>
-                                                <input type="text" class="form-control" id="saleSaleEdit">
+                                                <label for="saleQuantityEdit" class="control-label">Quantity</label>
+                                                <input type="text" class="form-control" id="saleQuantityEdit">
                                             </div>
+
                                             <div class="form-group">
-                                                <span class="control-label" style="color:red;" id="dialogErr"></span>
+                                                <label for="saleTotalEdit" class="control-label">Total</label>
+                                                <input type="text" class="form-control" id="saleTotalEdit">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <span class="control-label" style="color:red;" id="dialogSaleErr"></span>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -507,7 +521,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal" id="closeSaleDialog">Close</button>
-                                            <button type="button" class="btn btn-danger productDel" id="deleteSaleSave">Delete</button>
+                                            <button type="button" class="btn btn-danger saleDel" id="deleteSaleSave">Delete</button>
                                         </div>
                                     </div>
                                 </div>
@@ -530,7 +544,6 @@
                                             <th>Product</th>
                                             <th>Quantity</th>
                                             <th>Total</th>
-                                            <th>note</th>
                                             <th>Create Date</th>
                                         </tr>
                                     </thead>
@@ -547,7 +560,6 @@
                                             <td><%=p.getProduct_id()%></td>
                                             <td><%=p.getQuantity()%></td>
                                             <td><%=p.getTotal()%></td>
-                                            <td><%=p.getNote()%></td>
                                             <td><%=p.getCreate_date()%></td>
                                         </tr>
                                         <% }%>
