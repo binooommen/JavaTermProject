@@ -12,6 +12,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -71,9 +73,11 @@ public class product {
                     break;
             }
         }
-        System.out.println(mapKeyValue);
-        doPostOrPutOrDelete("INSERT INTO product (create_date, name, cost_price, list_price, description) VALUES ( null, ?, ?, ?, ?)",
-                mapKeyValue.get("name"), mapKeyValue.get("cost_price"), mapKeyValue.get("list_price"), mapKeyValue.get("description"));
+        Date d = new Date();
+        SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd");
+        String curr_date=form.format(d);
+        doPostOrPutOrDelete("INSERT INTO product (create_date, name, cost_price, list_price, description) VALUES ( ?, ?, ?, ?, ?)",
+               curr_date, mapKeyValue.get("name"), mapKeyValue.get("cost_price"), mapKeyValue.get("list_price"), mapKeyValue.get("description"));
     }
 
     @PUT

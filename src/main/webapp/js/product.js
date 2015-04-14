@@ -1,9 +1,12 @@
 $(document).ready(function() {
     $('#createProductSave').click(function() {
         var productName = $('#productNameSave').val();
-        var res = {name: $('#productNameSave').val()};
-        if (productName === '') {
-            $("#dialogErr").text("Please enter name.");
+        var productCost = $('#productCostSave').val();
+        var productSale = $('#productSaleSave').val();
+        var res = {name: $('#productNameSave').val(), cost_price: $('#productCostSave').val(),
+            list_price: $('#productSaleSave').val(), description: "description"};
+        if (productName === '' || productCost === '' || productSale === '') {
+            $("#dialogProdErr").text("All fields are required.");
         } else {
             $.ajax({
                 url: './api/product/',
@@ -13,7 +16,7 @@ $(document).ready(function() {
                 dataType: 'json',
                 success: function(data) {
                     $("#closeProductDialog").click();
-                    $("#dialogErr").text("");
+                    $("#dialogProdErr").text("");
                     window.location.href = "./home.jsp";
                 }
             });
@@ -22,17 +25,17 @@ $(document).ready(function() {
 
     $('#productDeletePanel').on('show.bs.modal', function(event) {
         var button = $(event.relatedTarget); // Button that triggered the modal
-        var custId = button.data('whatever'); // Extract info from data-* attributes
+        var prodId = button.data('whatever'); // Extract info from data-* attributes
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        $('#productIdDelete').val(custId);
+        $('#productIdDelete').val(prodId);
 
     });
 
     $('.productDel').click(function() {
-        var customerId = $('#productIdDelete').val();
+        var productId = $('#productIdDelete').val();
         $.ajax({
-            url: "./api/product/" + customerId,
+            url: "./api/product/" + productId,
             dataType: "json",
             contentType: 'application/json; charset=UTF-8',
             method: "delete",
@@ -55,20 +58,27 @@ $(document).ready(function() {
                 var productId = data.id;
                 var productName = data.name;
                 var productDate = data.create_date;
+                var productCost = data.cost_price;
+                var productSale = data.list_price;
                 $('#productIdEdit').val(productId);
                 $('#productCreateDateEdit').val(productDate);
                 $('#productNameEdit').val(productName);
+                $('#productCostEdit').val(productCost);
+                $('#productSaleEdit').val(productSale);
             }
         });
     });
 
 
     $('#editProductSave').click(function() {
-        var customerName = $('#productNameEdit').val();
-        var res = {name: $('#productNameEdit').val()};
+        var productName = $('#productNameEdit').val();
+        var productCost = $('#productCostEdit').val();
+        var productSale = $('#productSaleEdit').val();
+        var res = {name: $('#productNameEdit').val(), cost_price: $('#productCostEdit').val(),
+            list_price: $('#productSaleEdit').val(), description: "description"};
         var customerId = $('#productIdEdit').val();
-        if (customerName === '') {
-            $("#dialogErr").text("Please enter name.");
+        if (productName === '' || productCost === '' || productSale === '') {
+            $("#dialogProdErr").text("All fields are required.");
         } else {
             $.ajax({
                 url: './api/product/' + customerId,

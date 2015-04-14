@@ -283,7 +283,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <span class="control-label" style="color:red;" id="dialogErr"></span>
+                                                <span class="control-label" style="color:red;" id="dialogProdErr"></span>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -324,7 +324,7 @@
                                                 <input type="text" class="form-control" id="productSaleEdit">
                                             </div>
                                             <div class="form-group">
-                                                <span class="control-label" style="color:red;" id="dialogErr"></span>
+                                                <span class="control-label" style="color:red;" id="dialogProdErr"></span>
                                             </div>
                                         </div>
                                         <div class="modal-footer">

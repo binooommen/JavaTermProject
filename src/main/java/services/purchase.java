@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -70,8 +72,11 @@ public class purchase {
                     break;
             }
         }
-        System.out.println(mapKeyValue);
-        doPostOrPutOrDelete("INSERT INTO purchase (create_date, product_id, quantity, total, note) VALUES ( null, ?, ?, ?, ?)",
+        Date d = new Date();
+        SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd");
+        String curr_date=form.format(d);
+        doPostOrPutOrDelete("INSERT INTO purchase (create_date, product_id, quantity, total, note) VALUES ( ?, ?, ?, ?, ?)",
+                curr_date,
                 mapKeyValue.get("product_id"), mapKeyValue.get("quantity"),
                 mapKeyValue.get("total"), mapKeyValue.get("note"));
     }
