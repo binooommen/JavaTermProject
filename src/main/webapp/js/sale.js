@@ -7,7 +7,7 @@ $(document).ready(function() {
         var avaliableQuantity = $('#saleAvaliableQuantitySave').val();
         var res = {customer_id: $('#saleCustomerSave').val(), product_id: $('#saleProductSave').val(),
             quantity: $('#saleQuantitySave').val(), total: $('#saleTotalSave').val(), note: "note"};
-        if (saleCustomer === '' && saleProduct === '' && saleQuantity === '' && saleTotal === '') {
+        if (saleCustomer === '' || saleProduct === '' || saleQuantity === '' || saleTotal === '') {
             $("#dialogSaleErr").text("All fields are required.");
         }
         else if (parseInt(saleQuantity) <= 0) {
@@ -118,6 +118,8 @@ $(document).ready(function() {
                 var avaliableQuantity = data.quantity_available;
                 $('#saleSalePriceSave').val(productSale);
                 $('#saleAvaliableQuantitySave').val(avaliableQuantity);
+                $('#saleQuantitySave').val("");
+                $('#saleTotalSave').val("");
             }
         });
     });

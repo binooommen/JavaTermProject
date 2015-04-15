@@ -5,7 +5,7 @@ $(document).ready(function() {
         var purchaseTotal = $('#purchaseTotalSave').val();
         var res = {product_id: $('#purchaseProductSave').val(),
             quantity: $('#purchaseQuantitySave').val(), total: $('#purchaseTotalSave').val(), note: "note"};
-        if (purchaseProduct === '' && purchaseQuantity === '' && purchaseTotal === '') {
+        if (purchaseProduct === '' || purchaseQuantity === '' || purchaseTotal === '') {
             $("#dialogPurchaseErr").text("All fields are required.");
         }
         else if (parseInt(purchaseQuantity) <= 0) {
