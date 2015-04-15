@@ -623,7 +623,7 @@
 
                                             <div class="form-group">
                                                 <label for="purchaseProductSave" class="control-label">Product</label>
-                                                <select class="form-control" id="saleProductSave">
+                                                <select class="form-control" id="purchaseProductSave">
                                                     <option></option>
                                                     <%
                                                         for (int i = 0; i < Lprod.size(); i += 1) {
@@ -635,7 +635,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="purchaseAvaliableQuantitySave" class="control-label">Available Quantity</label>
+                                                <label for="purchaseAvaliableQuantitySave" class="control-label">Quantity in Stock</label>
                                                 <input type="text" class="form-control" id="purchaseAvaliableQuantitySave" readonly="true">
                                             </div>
 
@@ -645,8 +645,8 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="purchaseSalePriceSave" class="control-label">Sale Price</label>
-                                                <input type="text" class="form-control" id="purchaseSalePriceSave" readonly="true">
+                                                <label for="purchaseCostPriceSave" class="control-label">Cost Price</label>
+                                                <input type="text" class="form-control" id="purchaseCostPriceSave" readonly="true">
                                             </div>
 
                                             <div class="form-group">
@@ -729,7 +729,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal" id="closePurchaseDialog">Close</button>
-                                            <button type="button" class="btn btn-danger saleDel" id="deletePurchaseSave">Delete</button>
+                                            <button type="button" class="btn btn-danger purchaseDel" id="deletePurchaseSave">Delete</button>
                                         </div>
                                     </div>
                                 </div>

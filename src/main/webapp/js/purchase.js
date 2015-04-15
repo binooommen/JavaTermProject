@@ -3,7 +3,6 @@ $(document).ready(function() {
         var purchaseProduct = $('#purchaseProductSave').val();
         var purchaseQuantity = $('#purchaseQuantitySave').val();
         var purchaseTotal = $('#purchaseTotalSave').val();
-        var avaliableQuantity = $('#purchaseAvaliableQuantitySave').val();
         var res = {product_id: $('#purchaseProductSave').val(),
             quantity: $('#purchaseQuantitySave').val(), total: $('#purchaseTotalSave').val(), note: "note"};
         if (purchaseProduct === '' && purchaseQuantity === '' && purchaseTotal === '') {
@@ -107,23 +106,25 @@ $(document).ready(function() {
         var url = './api/product/' + purchase_product_id;
         $.getJSON(url, function(data) {
             if (!jQuery.isEmptyObject(data)) {
-                var productPurchase = data.list_price;
+                var productCost = data.cost_price;
                 var avaliableQuantity = data.quantity_available;
-                $('#purchasePurchasePriceSave').val(productPurchase);
+                $('#purchaseCostPriceSave').val(productCost);
                 $('#purchaseAvaliableQuantitySave').val(avaliableQuantity);
             }
         });
     });
 
 
+
     $("#purchaseQuantitySave").change(function() {
         var qty = $(this).val();
-        var productPurchase = $('#purchasePurchasePriceSave').val();
-        var avaliableQuantity = $('#purchaseAvaliableQuantitySave').val();
-        if (parseInt(qty) !== 0) {
-            $('#purchaseTotalSave').val(qty * productPurchase);
+        var purchaseCost = $('#purchaseCostPriceSave').val();
+        if (parseInt(qty) >= 0) {
+            $('#purchaseTotalSave').val(qty * purchaseCost);
+            $("#dialogPurchaseErr").text("");
+        } else {
+            $("#dialogPurchaseErr").text("Please enter a valid quantity");
         }
     });
-
 
 });
