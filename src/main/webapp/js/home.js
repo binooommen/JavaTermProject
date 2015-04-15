@@ -14,7 +14,7 @@ $(document).ready(function() {
                 success: function(data) {
                     $("#closeCustomerDialog").click();
                     $("#dialogErr").text("");
-                    window.location.href = "./home.jsp";
+                    window.location.href = "./home.jsp?page=customer";
                 }
             });
         }
@@ -37,7 +37,7 @@ $(document).ready(function() {
             contentType: 'application/json; charset=UTF-8',
             method: "delete",
             success: function(data) {
-                window.location.href = "./home.jsp";
+                window.location.href = "./home.jsp?page=customer";
             }
         });
     });
@@ -79,7 +79,7 @@ $(document).ready(function() {
                 success: function(data) {
                     $("#closeCustomerDialog").click();
                     $("#dialogErr").text("");
-                    window.location.href = "./home.jsp";
+                    window.location.href = "./home.jsp?page=customer";
                 }
             });
         }

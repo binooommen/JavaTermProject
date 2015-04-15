@@ -37,70 +37,106 @@
                         <p>Manage your business better...</p>      
                     </div>
 
-                    <!--<form role="form" id="home-form" action="homeServlet" method="post">-->
-                    <div class="col-md-3">
-                        <ul class="nav nav-pills nav-stacked">
-                            <li >
-                                <a data-toggle="tab" href="#home">
-                                    <span class="glyphicon glyphicon-home"></span>&nbsp; Home
-                                </a>
-                            </li>
-                            <li class="active">
-                                <a data-toggle="tab" href="#customer">
-                                    <span class="glyphicon glyphicon-user"></span>&nbsp; Customer
-                                </a>
-                            </li>
-                            <li>
-                                <a data-toggle="tab" href="#product">
-                                    <span class="glyphicon glyphicon-gift"></span>&nbsp; Product
-                                </a>
-                            </li>
-                            <li>
-                                <a data-toggle="tab" href="#sale">
-                                    <span class="glyphicon glyphicon-shopping-cart"></span>&nbsp; Sale
-                                </a>
-                            </li>
-                            <li>
-                                <a data-toggle="tab" href="#purchase">
-                                    <span class="glyphicon glyphicon-folder-open"></span>&nbsp; Purchase
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="tab-content">
-                        <!--home tab data-->
-                        <div class="tab-pane " id="home">
-                            <div class="col-md-9"> 
-                                <div class="well well-sm">
-                                    My home
-                                </div>
+                <%
+                    String HomeAct = "";
+                    String ProductAct = "";
+                    String CustomerAct = "";
+                    String PurchaseAct = "";
+                    String SaleAct = "";
+                    String para = request.getParameter("page")+"";
+                    if (para.equals("customer")) {
+                        CustomerAct = "active";
+                    } else if (para.equals("product")) {
+                        ProductAct = "active";
+                    } else if (para.equals("sale")) {
+                        SaleAct = "active";
+                    } else if (para.equals("purchase")) {
+                        PurchaseAct = "active";
+                    } else {
+                        HomeAct = "active";
+                    }
+                %>
+
+                <!--<form role="form" id="home-form" action="homeServlet" method="post">-->
+                <div class="col-md-3">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li class="<%=HomeAct%>">
+                            <a data-toggle="tab" href="#home">
+                                <span class="glyphicon glyphicon-home"></span>&nbsp; Home
+                            </a>
+                        </li>
+                        <li class="<%=CustomerAct%>">
+                            <a data-toggle="tab" href="#customer">
+                                <span class="glyphicon glyphicon-user"></span>&nbsp; Customer
+                            </a>
+                        </li>
+                        <li class="<%=ProductAct%>">
+                            <a data-toggle="tab" href="#product">
+                                <span class="glyphicon glyphicon-gift"></span>&nbsp; Product
+                            </a>
+                        </li>
+                        <li class="<%=SaleAct%>">
+                            <a data-toggle="tab" href="#sale">
+                                <span class="glyphicon glyphicon-shopping-cart"></span>&nbsp; Sale
+                            </a>
+                        </li>
+                        <li class="<%=PurchaseAct%>">
+                            <a data-toggle="tab" href="#purchase">
+                                <span class="glyphicon glyphicon-folder-open"></span>&nbsp; Purchase
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <!--home tab data-->
+                    <div class="tab-pane <%=HomeAct%>" id="home">
+                        <div class="col-md-9"> 
+                            <div class="well well-sm">
+                                My home
                             </div>
                         </div>
-                        <!--home tab data ends-->
-                        <!--customer tab data-->
-                        <div class="tab-pane active" id="customer">
-                            <div class="col-md-9" > 
-                                <div class="tab-content">
-                                    <div class="panel panel-default tab-pane active" id="customerPanel">
-                                        <div class="panel-heading">
-                                            <a  data-toggle="modal" href="#customerCreatePanel">
-                                                <button type="button" class="btn btn-success">Create</button>
-                                            </a>
-                                        </div>
-                                        <table id="customer_tbl" class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Name</th>
-                                                    <th>Create Date</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+                    </div>
+                    <!--home tab data ends-->
+
+
+                    <!--customer tab data-->
+                    <div class="tab-pane <%=CustomerAct%>" id="customer">
+                        <div class  
+
+                             ="col-md-9" > 
+                            <div class  
+
+                                 ="tab-content">
+                                <div class  
+
+                                     ="panel panel-default tab-pane active" id="customerPanel">
+                                    <div class  
+
+                                         ="panel-heading">
+                                        <a  data-toggle="modal" href="#customerCreatePanel">
+                                            <button type="button" class  
+
+                                                    ="btn btn-success">Create</button>
+                                        </a>
+                                    </div>
+                                    <table id="customer_tbl" class  
+
+                                           ="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Create Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
                                             <%
                                                 String qr = "select * from customer;";
                                                 homeBean.setCustomerData(qr);
                                                 List<Customer> Lcust = homeBean.getListOfCustomer();
-                                                for (int i = 0; i < Lcust.size(); i += 1) {
+                                                for (int i = 0;
+                                                        i < Lcust.size();
+                                                        i += 1) {
                                                     Customer c = Lcust.get(i);
                                             %>
                                             <tr>      
@@ -211,7 +247,7 @@
                     </div>
                     <!--customer tab data-->
                     <!--product tab data-->
-                    <div class="tab-pane" id="product">
+                    <div class="tab-pane <%=ProductAct%>" id="product">
                         <div class="col-md-9" > 
                             <div class="panel panel-default">
                                 <div class="panel-heading">
@@ -233,9 +269,12 @@
                                     <tbody>
                                         <%
                                             qr = "select * from product;";
+
                                             homeBean.setProductData(qr);
                                             List<Product> Lprod = homeBean.getListOfProduct();
-                                            for (int i = 0; i < Lprod.size(); i += 1) {
+                                            for (int i = 0;
+                                                    i < Lprod.size();
+                                                    i += 1) {
                                                 Product p = Lprod.get(i);
                                         %>
                                         <tr>      
@@ -365,7 +404,7 @@
                         </div>
                     </div>
                     <!--sale tab data-->
-                    <div class="tab-pane" id="sale">
+                    <div class="tab-pane <%=SaleAct%>" id="sale">
                         <div class="col-md-9" > 
                             <div class="panel panel-default">
                                 <div class="panel-heading">
@@ -390,9 +429,12 @@
                                                     + "quantity, total, note, c.name as 'customer_name', p.name as 'product_name' "
                                                     + "FROM sale s left join product p on s.product_id = p.id "
                                                     + "left join customer c on s.customer_id = c.id;";
+
                                             homeBean.setSaleData(qr);
                                             List<Sale> Lsale = homeBean.getListOfSale();
-                                            for (int i = 0; i < Lsale.size(); i += 1) {
+                                            for (int i = 0;
+                                                    i < Lsale.size();
+                                                    i += 1) {
                                                 Sale s = Lsale.get(i);
                                         %>
                                         <tr>      
@@ -434,7 +476,9 @@
                                                 <select class="form-control" id="saleCustomerSave">
                                                     <option></option>
                                                     <%
-                                                        for (int i = 0; i < Lcust.size(); i += 1) {
+                                                        for (int i = 0;
+                                                                i < Lcust.size();
+                                                                i += 1) {
                                                             Customer c = Lcust.get(i);
                                                     %>
                                                     <option id="<%=c.getId()%>" value="<%=c.getId()%>"><%=c.getName()%></option>
@@ -448,7 +492,9 @@
                                                 <select class="form-control" id="saleProductSave">
                                                     <option></option>
                                                     <%
-                                                        for (int i = 0; i < Lprod.size(); i += 1) {
+                                                        for (int i = 0;
+                                                                i < Lprod.size();
+                                                                i += 1) {
                                                             Product p = Lprod.get(i);
                                                     %>
                                                     <option id="<%=p.getId()%>" value="<%=p.getId()%>"><%=p.getName()%></option>
@@ -565,7 +611,7 @@
                     </div>
                     <!--sale tab data ends-->
                     <!--purchase tab data-->
-                    <div class="tab-pane" id="purchase">
+                    <div class="tab-pane <%=PurchaseAct%>" id="purchase">
                         <div class="col-md-9" > 
                             <div class="panel panel-default">
                                 <div class="panel-heading">
@@ -588,9 +634,12 @@
                                             qr = "SELECT pr.id as 'id', pr.create_date as 'create_date', "
                                                     + "product_id, quantity, total, note, p.name as 'product_name' "
                                                     + "FROM purchase pr left join product p on pr.product_id = p.id;";
+
                                             homeBean.setPurchaseData(qr);
                                             List<Purchase> Lpurchase = homeBean.getListOfPurchase();
-                                            for (int i = 0; i < Lpurchase.size(); i += 1) {
+                                            for (int i = 0;
+                                                    i < Lpurchase.size();
+                                                    i += 1) {
                                                 Purchase p = Lpurchase.get(i);
                                         %>
                                         <tr>      
@@ -628,7 +677,9 @@
                                                 <select class="form-control" id="purchaseProductSave">
                                                     <option></option>
                                                     <%
-                                                        for (int i = 0; i < Lprod.size(); i += 1) {
+                                                        for (int i = 0;
+                                                                i < Lprod.size();
+                                                                i += 1) {
                                                             Product p = Lprod.get(i);
                                                     %>
                                                     <option id="<%=p.getId()%>" value="<%=p.getId()%>"><%=p.getName()%></option>

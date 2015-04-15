@@ -17,7 +17,7 @@ $(document).ready(function() {
                 success: function(data) {
                     $("#closeProductDialog").click();
                     $("#dialogProdErr").text("");
-                    window.location.href = "./home.jsp";
+                    window.location.href = "./home.jsp?page=product";
                 }
             });
         }
@@ -40,7 +40,7 @@ $(document).ready(function() {
             contentType: 'application/json; charset=UTF-8',
             method: "delete",
             success: function(data) {
-                window.location.href = "./home.jsp";
+                window.location.href = "./home.jsp?page=product";
             }
         });
     });
@@ -89,7 +89,7 @@ $(document).ready(function() {
                 success: function(data) {
                     $("#closeProductDialog").click();
                     $("#dialogErr").text("");
-                    window.location.href = "./home.jsp";
+                    window.location.href = "./home.jsp?page=product";
                 }
             });
         }

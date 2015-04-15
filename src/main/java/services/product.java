@@ -133,7 +133,6 @@ public class product {
         sb.append("[");
         String res = new String();
         try (Connection conn = database.getConnection()) {
-            System.out.println(query);
             PreparedStatement pstmt = conn.prepareStatement(query);
             if (params.length != 0) {
                 pstmt.setString(1, params[0]);
