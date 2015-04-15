@@ -16,17 +16,19 @@ public class Product {
     private String name;
     private Float cost_price;
     private Float list_price;
+    private Float quantity_on_hand;
     private String description;
 
     public Product() {
     }
 
-    public Product(int id, String create_date, String name, Float cost_price, Float list_price, String description) {
+    public Product(int id, String create_date, String name, Float cost_price, Float list_price, Float quantity_on_hand, String description) {
         this.id = id;
         this.create_date = create_date;
         this.name = name;
         this.cost_price = cost_price;
         this.list_price = list_price;
+        this.quantity_on_hand = quantity_on_hand;
         this.description = description;
     }
 
@@ -76,6 +78,14 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Float getQuantity_on_hand() {
+        return quantity_on_hand;
+    }
+
+    public void setQuantity_on_hand(Float quantity_on_hand) {
+        this.quantity_on_hand = quantity_on_hand;
     }
     
     

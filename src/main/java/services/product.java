@@ -131,7 +131,6 @@ public class product {
     private String getResults(String query, String... params) {
         StringBuilder sb = new StringBuilder();
         sb.append("[");
-//        JsonArrayBuilder productArr = Json.createArrayBuilder();
         String res = new String();
         try (Connection conn = database.getConnection()) {
             System.out.println(query);
@@ -144,8 +143,9 @@ public class product {
             int product_id;
             while (rs.next()) {
                 product_id = rs.getInt("id");
-                String findQtyQuery = "SELECT (sum(quantity) - (SELECT sum(quantity) FROM sale WHERE product_id = "+product_id+")) as \"available_qty\" "
-                        + "FROM purchase WHERE product_id = "+product_id+";";
+                String findQtyQuery = "SELECT (IFNULL(sum(p.quantity), 0) - IFNULL((SELECT sum(s.quantity) "
+                    + "FROM sale s WHERE s.product_id = " + product_id + "), 0)) as \"available_qty\" "
+                    + "FROM purchase p WHERE p.product_id = " + product_id + ";";
                 pstmt = conn.prepareStatement(findQtyQuery);
                 qtyRs = pstmt.executeQuery();
                 int available_qty=0;

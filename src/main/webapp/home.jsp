@@ -226,6 +226,7 @@
                                             <th>Name</th>
                                             <th>Cost price</th>
                                             <th>Sale price</th>
+                                            <th>Quantity on hand</th>
                                             <th>Create Date</th>
                                         </tr>
                                     </thead>
@@ -242,6 +243,7 @@
                                             <td><%=p.getName()%></td>
                                             <td><%=p.getCost_price()%></td>
                                             <td><%=p.getList_price()%></td>
+                                            <td><%=p.getQuantity_on_hand()%></td>
                                             <td>
                                                 <%=p.getCreate_date()%>
                                                 <div class="btn-group" role="group" style="float:right">

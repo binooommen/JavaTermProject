@@ -64,13 +64,27 @@ public class home {
         PreparedStatement pstmt = conn.prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
         List<Product> listOfProduct = new <Product>ArrayList();
+        ResultSet qtyRs;
+        int product_id;
+        Float available_qty;
         while (rs.next()) {
+            product_id = rs.getInt("id");
+            String findQtyQuery = "SELECT (IFNULL(sum(p.quantity), 0) - IFNULL((SELECT sum(s.quantity) "
+                    + "FROM sale s WHERE s.product_id = " + product_id + "), 0)) as \"available_qty\" "
+                    + "FROM purchase p WHERE p.product_id = " + product_id + ";";
+            pstmt = conn.prepareStatement(findQtyQuery);
+            qtyRs = pstmt.executeQuery();
+            available_qty = Float.parseFloat("0");
+            if (qtyRs.next()) {
+                available_qty = qtyRs.getFloat("available_qty");
+            }
             Product pr = new Product();
             pr.setId(rs.getInt("id"));
             pr.setName(rs.getString("name"));
             pr.setCreate_date(rs.getString("create_date"));
             pr.setCost_price(rs.getFloat("cost_price"));
             pr.setList_price(rs.getFloat("list_price"));
+            pr.setQuantity_on_hand(available_qty);
             pr.setDescription(rs.getString("description"));
             listOfProduct.add(pr);
         }
